@@ -49,7 +49,7 @@ def get_state(circ):
     """
 
     backend = AerSimulator()
-    tcirc = transpile(circ, backend)
+    tcirc = transpile(circ, backend, basis_gates=['u', 'cx'])
     tcirc.save_statevector()
     state_vector = backend.run(tcirc).result().get_statevector()
 
@@ -66,7 +66,7 @@ def get_cnot_count(circ, optimization_level=0):
     -------
     cnot_count: number of cnot gates in the quantum circuit
     """
-    tcirc = transpile(circ, basis_gates=['u', 'cx'], optimization_level=0)
+    tcirc = transpile(circ, basis_gates=['u', 'cx'], optimization_level=optimization_level)
     return tcirc.count_ops().get('cx', 0)
 
 
